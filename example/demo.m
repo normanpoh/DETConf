@@ -10,10 +10,24 @@ d=1; %dev scores
 [tmp, expe.dset{d,2}, tmp, expe.label{d,2}] = load_raw_scores_labels('gen.scores');
 clear tmp
 
+
+%% test the wer function
+clf;
+chosen=1;
+eer_(chosen) = wer(expe.dset{1,1}(:,chosen),expe.dset{1,2}(:,chosen),[],2,[],1);
+chosen=2;
+eer_(chosen) = wer(expe.dset{1,1}(:,chosen),expe.dset{1,2}(:,chosen),[],2,[],2);
+legend('System 1', 'System 2');
+
+eer_
+
+%% set the boostrap parameters
 n_user_bstrp=30;
 n_sample_bstrp = 1;
 
 chosen = 2; %the chosen system, can be 1 or 2 for our example
+
+
 %% let's go
 rad_list = joint_bootstrap(expe, chosen, n_user_bstrp, n_sample_bstrp);
 
